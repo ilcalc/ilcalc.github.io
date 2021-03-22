@@ -6,15 +6,13 @@
 
 (def ^:const default-proportion 50)
 
-(def ^:const default-amount 1000)
-
 (def ^:const default-price-change -80)
+
+(def ^:const default-pool-value 0)
 
 (def proportion (r/atom default-proportion))
 
-(def amount-a (r/atom default-amount))
-
-(def amount-b (r/atom default-amount))
+(def pool-value (r/atom default-pool-value))
 
 (def price-change-a (r/atom default-price-change))
 
@@ -29,11 +27,8 @@
 (defn- change-proportion [e]
   (value->atom e proportion))
 
-(defn- change-amount-a [e]
-  (value->atom e amount-a))
-
-(defn- change-amount-b [e]
-  (value->atom e amount-b))
+(defn- change-pool-value [e]
+  (value->atom e pool-value))
 
 (defn- change-price-change-a [e]
   (value->atom e price-change-a))
@@ -44,7 +39,7 @@
 (defn- calculate [_]
   (let [il (calc/il @price-change-a @price-change-b @proportion)
         hodl-value (* (calc/hodl-value @price-change-a @price-change-b @proportion)
-                      (+ @amount-a @amount-b))
+                      @pool-value)
         pool-value (* hodl-value
                       (/ (- 100.0 il) 100.0))]
     (swap! result
@@ -72,11 +67,6 @@
   [:div.root
    [:h1 "Impremanent Loss Calculator"]
    [:form
-    [:h2 "Coins"]
-    [:div.coins
-     [:h3 "Coin A"]
-     [:h3 "Coin B"]]
-
     [:h2 "Pool proportion"]
     [:div.proportion
      [:input.w-full {:type "range"
@@ -88,14 +78,10 @@
      [:span-center
       (str @proportion "/" (- 100 @proportion))]]
 
-    [:h2 "Initial values"]
-    [:div.amounts
+    [:h2 "Initial pool value"]
+    [:div.pool-value
      [:div
-      [:input {:type "number" :defaultValue default-amount :onChange change-amount-a}]
-      "$"]
-
-     [:div
-      [:input {:type "number" :defaultValue default-amount :onChange change-amount-b}]
+      [:input {:type "number" :defaultValue default-pool-value :onChange change-pool-value}]
       "$"]]
 
     [:h2 "Price changes"]
