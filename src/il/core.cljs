@@ -1,31 +1,8 @@
 (ns il.core
   (:require
+   [il.calc :as calc]
    [reagent.core :as r]
    [reagent.dom :as rdom]))
-
-(defn- change->variation [change]
-  (/ (+ 100.0 change)
-     100.0))
-
-(defn hodl-value [change-1 change-2 weight-1 weight-2]
-  (+
-   (/ (* (change->variation change-1) weight-1)
-      100.0)
-   (/ (* (change->variation change-2) weight-2)
-      100.0)))
-
-(defn pool-value [change-1 change-2 weight-1 weight-2]
-  (*
-   (Math/pow (change->variation change-1) (/ weight-1 100.0))
-   (Math/pow (change->variation change-2) (/ weight-2 100.0))))
-
-(defn il [change-1 change-2 weight-1 weight-2]
-  (->
-   (- (/ (pool-value change-1 change-2 weight-1 weight-2)
-         (hodl-value change-1 change-2 weight-1 weight-2))
-      1)
-   (* 100.0)
-   Math/abs))
 
 (def ^:const default-proportion 50)
 
@@ -65,8 +42,8 @@
   (value->atom e price-change-b))
 
 (defn- calculate [_]
-  (let [il (il @price-change-a @price-change-b @proportion (- 100 @proportion))
-        hodl-value (* (hodl-value @price-change-a @price-change-b @proportion (- 100 @proportion))
+  (let [il (calc/il @price-change-a @price-change-b @proportion)
+        hodl-value (* (calc/hodl-value @price-change-a @price-change-b @proportion)
                       (+ @amount-a @amount-b))
         pool-value (* hodl-value
                       (/ (- 100.0 il) 100.0))]
@@ -75,6 +52,21 @@
            :il il
            :hodl-value hodl-value
            :pool-value pool-value)))
+
+(defn- render-result []
+  (when (seq @result)
+    [:div.result
+     [:table.table
+      [:tbody
+       [:tr
+        [:td "Impermanent loss"]
+        [:td (str (.toFixed (get @result :il) 2) "%")]]
+       [:tr
+        [:td "HODL value"]
+        [:td (str (.toFixed (get @result :hodl-value 0.0) 2) "$")]]
+       [:tr
+        [:td "Pool value"]
+        [:td (str (.toFixed (get @result :pool-value 0.0) 2) "$")]]]]]))
 
 (defn app []
   [:div.root
@@ -118,17 +110,7 @@
     [:button {:type "button" :onClick calculate} "Calculate"]]
 
    [:hr]
-   (when (seq @result)
-     [:div.result
-      [:h2 (str "Impermanent loss: " (.toFixed (get @result :il) 2) "%")]
-      [:table.table
-       [:tbody
-        [:tr
-         [:td "HODL value"]
-         [:td (str (.toFixed (get @result :hodl-value 0.0) 2) "$")]]
-        [:tr
-         [:td "Pool value"]
-         [:td (str (.toFixed (get @result :pool-value 0.0) 2) "$")]]]]])])
+   [render-result]])
 
 (defn- render-app []
   (rdom/render [app] (js/document.getElementById "root")))
