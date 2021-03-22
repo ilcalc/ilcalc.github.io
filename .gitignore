@@ -1,0 +1,7 @@
+.DS_Store
+.idea
+.shadow-cljs/
+*.log
+node_modules/
+public/js/cljs-runtime/
+tmp/

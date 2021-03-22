@@ -1,0 +1,19 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src"
+  "test"]
+
+ :dependencies
+ [[reagent "1.0.0"]]
+
+ :builds
+ {:app {:target :browser
+        :output-dir "public/js/"
+        :asset-path "/assets"
+        :modules {:main {:init-fn il.core/main}}}
+  :test     {:target    :browser-test
+             :test-dir  "dist/test"
+             :devtools  {:http-port          8021
+                         :http-root          "dist/test"}}}
+
+ :dev-http {8000 "public"}}

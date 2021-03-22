@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.2.1",
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.8",
+    "postcss-cli": "^8.3.1",
+    "postcss-import": "^14.0.0",
+    "shadow-cljs": "^2.11.23",
+    "tailwindcss": "^2.0.4"
+  },
+  "dependencies": {
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
+  }
+}

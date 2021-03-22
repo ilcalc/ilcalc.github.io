@@ -1,0 +1,23 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.root {
+  @apply container mx-auto;
+}
+
+.coins {
+  @apply grid grid-cols-3 gap-4 w-full;
+}
+
+.proportion {
+  @apply text-center;
+}
+
+.amounts {
+  @apply grid grid-cols-3 gap-4 w-full;
+}
+
+.price-changes {
+  @apply grid grid-cols-3 gap-4 w-full;
+}
