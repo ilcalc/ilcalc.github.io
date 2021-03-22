@@ -6,7 +6,7 @@
 
 (def ^:const default-proportion 50)
 
-(def ^:const default-price-change -80)
+(def ^:const default-price-change 0)
 
 (def ^:const default-pool-value 0)
 
@@ -65,11 +65,11 @@
 
 (defn app []
   [:div.root
-   [:h1 "Impremanent Loss Calculator"]
+   [:h1 "Impremanent" [:br] "Loss" [:br] "Calculator"]
    [:form
     [:h2 "Pool proportion"]
-    [:div.proportion
-     [:input.w-full {:type "range"
+    [:section.proportion
+     [:input.slider {:type "range"
                      :min 0
                      :max 100
                      :step 10
@@ -79,21 +79,25 @@
       (str @proportion "/" (- 100 @proportion))]]
 
     [:h2 "Initial pool value"]
-    [:div.pool-value
-     [:div
-      [:input {:type "number" :defaultValue default-pool-value :onChange change-pool-value}]
-      "$"]]
+    [:section.pool-value
+     [:span.unit "$"]
+     [:input {:type "number" :defaultValue default-pool-value :onChange change-pool-value}]]
 
     [:h2 "Price changes"]
-    [:div.price-changes
+    [:section.price-changes
      [:div
-      [:input {:type "number" :defaultValue default-price-change :onChange change-price-change-a}]
-      "%"]
+      [:input {:type "number"
+               :defaultValue default-price-change
+               :onChange change-price-change-a}]
+      [:span.unit "%"]]
      [:div
-      [:input {:type "number" :defaultValue default-price-change :onChange change-price-change-b}]
-      "%"]]
+      [:input {:type "number"
+               :defaultValue default-price-change
+               :onChange change-price-change-b}]
+      [:span.unit "%"]]]
 
-    [:button {:type "button" :onClick calculate} "Calculate"]]
+    [:section.submit
+     [:button {:type "button" :onClick calculate} "Calculate"]]]
 
    [:hr]
    [render-result]])
