@@ -12,13 +12,6 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-*:focus {
-  outline: none;
-  border-color: inherit;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
 input {
   -webkit-appearance: none;
   -webkit-border-radius: 0;
@@ -36,11 +29,12 @@ input {
 
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
   width: 18px;
   height: 18px;
   background: #fff;
   cursor: pointer;
+  border: 1px solid black;
+  border-radius: 0px;
 }
 
 .slider::-moz-range-thumb {
@@ -48,6 +42,8 @@ input {
   height: 18px;
   background: #fff;
   cursor: pointer;
+  border: 1px solid black;
+  border-radius: 0px;
 }
 
 .root {

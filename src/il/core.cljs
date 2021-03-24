@@ -28,21 +28,24 @@
     (.toLocaleString number js/undefined {:minimumFractionDigits 2 :maximumSignificantDigits 2})
     number))
 
-(defn- value->atom [e atom]
-  (let [new-value (js/parseInt (.. e -target -value))]
-    (reset! atom new-value)))
+(defn- value->atom [e atom negatives?]
+  (let [new-value (.. e -target -value)]
+    (if (and negatives? (= new-value "-"))
+      (reset! atom new-value)
+      (let [parsed (js/parseInt new-value)]
+        (reset! atom (if (= parsed parsed) parsed ""))))))
 
 (defn- change-proportion [e]
-  (value->atom e proportion))
+  (value->atom e proportion false))
 
 (defn- change-pool-value [e]
-  (value->atom e pool-value))
+  (value->atom e pool-value false))
 
 (defn- change-price-change-a [e]
-  (value->atom e price-change-a))
+  (value->atom e price-change-a true))
 
 (defn- change-price-change-b [e]
-  (value->atom e price-change-b))
+  (value->atom e price-change-b true))
 
 (defn- calculate [_]
   (let [il (calc/il @price-change-a @price-change-b @proportion)
@@ -84,24 +87,28 @@
                      :min 0
                      :max 100
                      :step 10
-                     :defaultValue default-proportion
+                     :value @proportion
                      :onChange change-proportion}]]
 
     [:label "Initial pool value"]
     [:section.pool-value
      [:span.unit "$"]
-     [:input {:type "number" :defaultValue default-pool-value :onChange change-pool-value}]]
+     [:input {:type "number" :value @pool-value :onChange change-pool-value}]]
 
     [:label "Price changes"]
     [:section.price-changes
      [:div
       [:input {:type "number"
-               :defaultValue default-price-change
+               :autoComplete "off"
+               :autoCorrect "off"
+               :value @price-change-a
                :onChange change-price-change-a}]
       [:span.unit "%"]]
      [:div
       [:input {:type "number"
-               :defaultValue default-price-change
+               :autoComplete "off"
+               :autoCorrect "off"
+               :value @price-change-b
                :onChange change-price-change-b}]
       [:span.unit "%"]]]
 
