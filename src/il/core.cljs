@@ -1,14 +1,17 @@
 (ns il.core
   (:require
    [il.calc :as calc]
+   [goog.string :as gstring]
    [reagent.core :as r]
    [reagent.dom :as rdom]))
+
+(def nbsp (gstring/unescapeEntities "&nbsp;"))
 
 (def ^:const default-proportion 50)
 
 (def ^:const default-price-change 0)
 
-(def ^:const default-pool-value 0)
+(def ^:const default-pool-value 1000)
 
 (def proportion (r/atom default-proportion))
 
@@ -19,6 +22,11 @@
 (def price-change-b (r/atom 0))
 
 (def result (r/atom {}))
+
+(defn- format-num [number]
+  (if (.-toLocaleString number)
+    (.toLocaleString number js/undefined {:minimumFractionDigits 2 :maximumSignificantDigits 2})
+    number))
 
 (defn- value->atom [e atom]
   (let [new-value (js/parseInt (.. e -target -value))]
@@ -50,40 +58,41 @@
 
 (defn- render-result []
   (when (seq @result)
-    [:div.result
-     [:table.table
-      [:tbody
-       [:tr
-        [:td "Impermanent loss"]
-        [:td (str (.toFixed (get @result :il) 2) "%")]]
-       [:tr
-        [:td "HODL value"]
-        [:td (str (.toFixed (get @result :hodl-value 0.0) 2) "$")]]
-       [:tr
-        [:td "Pool value"]
-        [:td (str (.toFixed (get @result :pool-value 0.0) 2) "$")]]]]]))
+    [:table.table.result
+     [:tbody
+      [:tr
+       [:td "Impermanent loss"]
+       [:td (str (.toFixed (get @result :il) 2) nbsp "%")]]
+      [:tr
+       [:td "HODL value"]
+       [:td (str "$" nbsp (format-num (get @result :hodl-value 0.0)))]
+       ;;
+       ]
+      [:tr
+       [:td "Pool value"]
+       [:td (str "$" nbsp (format-num (get @result :pool-value 0.0)))]]]]))
 
 (defn app []
   [:div.root
    [:h1 "Impremanent" [:br] "Loss" [:br] "Calculator"]
    [:form
-    [:h2 "Pool proportion"]
+    [:label "Pool proportion"]
     [:section.proportion
+     [:span
+      (str @proportion "/" (- 100 @proportion))]
      [:input.slider {:type "range"
                      :min 0
                      :max 100
                      :step 10
                      :defaultValue default-proportion
-                     :onChange change-proportion}]
-     [:span-center
-      (str @proportion "/" (- 100 @proportion))]]
+                     :onChange change-proportion}]]
 
-    [:h2 "Initial pool value"]
+    [:label "Initial pool value"]
     [:section.pool-value
      [:span.unit "$"]
      [:input {:type "number" :defaultValue default-pool-value :onChange change-pool-value}]]
 
-    [:h2 "Price changes"]
+    [:label "Price changes"]
     [:section.price-changes
      [:div
       [:input {:type "number"
@@ -108,4 +117,5 @@
 (defn main []
   (render-app))
 
-(defn ^:dev/after-load after-load [] (render-app))
+(defn ^:dev/after-load after-load []
+  (render-app))

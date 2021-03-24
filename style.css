@@ -16,7 +16,7 @@ input[type="number"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 5px;
+  height: 2px;
   /*  height: 25px; */
   background: #000;
   outline: none;
@@ -42,41 +42,41 @@ input[type="number"] {
 }
 
 .root {
-  @apply container mx-auto mt-10;
+  @apply container mx-auto mt-6 px-2;
 }
 
 h1 {
   @apply font-bold  text-xl mb-12 leading-6;
 }
 
-form h2 {
-  @apply mb-2;
+form label {
+  @apply mb-2 block uppercase font-semibold text-sm;
 }
 
 form section {
   @apply mb-6;
 }
 
-.pool-value,
-.price-changes div {
-  @apply relative;
+form section.proportion {
+  @apply mb-5;
 }
 
 form .unit {
-  @apply font-bold text-lg absolute bottom-0 py-1 border-b-2 border-black block;
-}
-
-.price-changes .unit {
-  @apply right-0;
+  @apply font-bold inline-block text-lg py-1 border-b-2 border-black;
 }
 
 .price-changes input,
 .pool-value input {
-  @apply border-0 border-b-2 border-black text-lg py-1 px-2 pl-4 font-semibold w-1/2;
+  @apply border-0 border-b-2 border-black text-lg py-1 px-2 font-semibold w-1/2;
 }
 
 .proportion {
   @apply text-center;
+}
+
+.proportion span {
+  @apply font-semibold text-lg block;
+  margin-bottom: -9px;
 }
 
 .price-changes {
@@ -92,6 +92,22 @@ button {
 }
 
 hr {
-  @apply bg-black border-0;
+  @apply bg-black border-0 mb-6;
   height: 2px;
+}
+
+.result {
+  @apply w-full uppercase;
+}
+
+.result tr {
+  @apply border-b border-gray-400;
+}
+
+.result td {
+  @apply font-semibold py-3;
+}
+
+.result td + td {
+  @apply font-normal text-lg w-0;
 }

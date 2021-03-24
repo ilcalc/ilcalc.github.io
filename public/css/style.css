@@ -31347,7 +31347,7 @@ input[type="number"] {
   -moz-appearance: none;
        appearance: none;
   width: 100%;
-  height: 5px;
+  height: 2px;
   /*  height: 25px; */
   background: #000;
   outline: none;
@@ -31385,7 +31385,9 @@ input[type="number"] {
 .root {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 h1 {
@@ -31396,34 +31398,33 @@ h1 {
   margin-bottom: 3rem;
 }
 
-form h2 {
+form label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   margin-bottom: 0.5rem;
+  text-transform: uppercase;
 }
 
 form section {
   margin-bottom: 1.5rem;
 }
 
-.pool-value, .price-changes div {
-  position: relative;
+form section.proportion {
+  margin-bottom: 1.25rem;
 }
 
 form .unit {
   --tw-border-opacity: 1;
   border-color: rgba(0, 0, 0, var(--tw-border-opacity));
   border-bottom-width: 2px;
-  display: block;
+  display: inline-block;
   font-weight: 700;
   font-size: 1.125rem;
   line-height: 1.75rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  position: absolute;
-  bottom: 0px;
-}
-
-.price-changes .unit {
-  right: 0px;
 }
 
 .price-changes input, .pool-value input {
@@ -31438,12 +31439,19 @@ form .unit {
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  padding-left: 1rem;
   width: 50%;
 }
 
 .proportion {
   text-align: center;
+}
+
+.proportion span {
+  display: block;
+  font-weight: 600;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  margin-bottom: -9px;
 }
 
 .price-changes {
@@ -31477,7 +31485,32 @@ hr {
   --tw-bg-opacity: 1;
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
   border-width: 0px;
+  margin-bottom: 1.5rem;
   height: 2px;
+}
+
+.result {
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.result tr {
+  --tw-border-opacity: 1;
+  border-color: rgba(156, 163, 175, var(--tw-border-opacity));
+  border-bottom-width: 1px;
+}
+
+.result td {
+  font-weight: 600;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.result td + td {
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  width: 0px;
 }
 
 @media (min-width: 640px) {
