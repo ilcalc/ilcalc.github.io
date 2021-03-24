@@ -1,3 +1,5 @@
+.PHONY: js css release test
+
 js:
 	yarn shadow-cljs watch app test
 
@@ -9,3 +11,7 @@ release:
 	NODE_ENV=production yarn postcss style.css -o docs/css/style.css
 	git add .
 	git commit -am "Release"
+
+test:
+	yarn shadow-cljs compile ci
+	yarn karma start --single-run

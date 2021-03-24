@@ -14,6 +14,8 @@
   :test {:target    :browser-test
          :test-dir  "docs/test"
          :devtools  {:http-port          8021
-                     :http-root          "docs/test"}}}
+                     :http-root          "docs/test"}}
+  :ci {:target :karma
+       :output-to "docs/test/ci.js"}}
 
  :dev-http {8000 {:roots ["docs/dev" "docs"]}}}
