@@ -3,5 +3,6 @@
 .shadow-cljs/
 *.log
 node_modules/
-public/js/cljs-runtime/
+public/dev
+public/test
 tmp/
