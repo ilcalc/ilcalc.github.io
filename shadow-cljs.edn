@@ -8,12 +8,12 @@
 
  :builds
  {:app {:target :browser
-        :output-dir "public/dev/js"
+        :output-dir "docs/dev/js"
         :asset-path "/dev/js"
         :modules {:main {:init-fn il.core/main}}}
   :test {:target    :browser-test
-         :test-dir  "public/test"
+         :test-dir  "docs/test"
          :devtools  {:http-port          8021
-                     :http-root          "public/test"}}}
+                     :http-root          "docs/test"}}}
 
- :dev-http {8000 {:roots ["public/dev" "public"]}}}
+ :dev-http {8000 {:roots ["docs/dev" "docs"]}}}

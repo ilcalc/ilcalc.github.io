@@ -3,6 +3,6 @@
 .shadow-cljs/
 *.log
 node_modules/
-public/dev
-public/test
+docs/dev
+docs/test
 tmp/
