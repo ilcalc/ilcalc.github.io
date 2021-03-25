@@ -2,4 +2,4 @@
 
 Calculates impermanent loss.
 
-https://ilcalc.github.com
+https://ilcalc.github.io
