@@ -46,6 +46,24 @@ input {
   border-radius: 0px;
 }
 
+a {
+  @apply font-semibold underline;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#root {
+  flex: 1;
+}
+
+.footer {
+  @apply text-center text-sm text-gray-600 mt-10 mb-3;
+}
+
 .root {
   @apply container mx-auto mt-6 px-2;
 }
